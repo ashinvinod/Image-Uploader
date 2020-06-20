@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import {Form, Button, Col, InputGroup, Container, Alert} from 'react-bootstrap';
-import axios from "axios";
-import history from "./history";
-import userProfile from "./UserProfile"
+import React, {useState} from 'react';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import {Form, Button, Col, InputGroup, Alert} from 'react-bootstrap';
+import axios from 'axios';
+import history from './history';
+import userProfile from './UserProfile'
 
 
 function ValidatedLoginForm() {
@@ -44,6 +44,7 @@ function ValidatedLoginForm() {
               userProfile.setName(response.data.name);
               userProfile.setUserID(response.data.userID);
             }
+            console.log("REACHED");
             history.push('/dashboard')
           })
           .catch(err => {
@@ -136,6 +137,9 @@ function ValidatedLoginForm() {
             <Button type="submit">Login</Button>
           </Form.Row>
           <br />
+          <Form.Row className="justify-content-md-center">
+            <pre className="hlink"> <a onClick={() => history.push('/')}> Want to create a new account instead? Click here to sign-up. </a></pre>
+          </Form.Row>
           <Form.Row className="justify-content-md-center">
             {NotFoundAlert()}
           </Form.Row>

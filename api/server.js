@@ -131,7 +131,7 @@ app.post('/fileUp', upload.array('myFile', 1), function (req, res) {
     console.log(ofilename);
     db.collection('myusers').update(
         {"userID" : userID_global},
-        {$set: { "URL1" : ofilename}});
+        {$set: { "URL1" : " "}});
     res.status(200).send();
 });
 

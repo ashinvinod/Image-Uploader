@@ -1,0 +1,15 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "extends": "airbnb",
+    "rules": {
+        "linebreak-style": 0,
+        "indent": "off",
+        "no-tabs": "off",
+        "react/jsx-indent": "off",
+        "allowIndentationTabs": 0
+    }
+}

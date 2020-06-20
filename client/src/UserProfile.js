@@ -1,23 +1,24 @@
-import React from 'react';
+
 import Cookies from 'universal-cookie';
+
 const cookies = new Cookies();
 
-var UserProfile = (function() {
-	var name = "";
-	var userID = "";
-	var password = "";
+const UserProfile = (function () {
+	let name = '';
+	let userID = '';
+	let password = '';
 
-  var getName = function() { return name; };
-  var setName = function(name1) { name = name1; };
-	var getPassword = function() { return password; };
-	var setPassword = function(password1) { password = password1; };
+  const getName = function() { return name; };
+  const setName = function(name1) { name = name1; };
+	const getPassword = function() { return password; };
+	const setPassword = function(password1) { password = password1; };
 
-	var getUserID = function() { return cookies.get('userID') };
-	var setUserID = function(userID1) {
+	let getUserID = function() { return cookies.get('userID') };
+	let setUserID = function(userID1) {
 		userID = userID1;
-		cookies.set('userID', userID1, { path: '/' });
+		cookies.set('userID', userID, { path: '/' });
 	};
-	var delUserID = function() {
+	let delUserID = function() {
 		cookies.remove('userID', { path: '/' })
 	}
 
