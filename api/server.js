@@ -50,7 +50,7 @@ var upload = multer({
         s3: s3,
         bucket: 'mybucc99',
         key: function (req, file, cb) {
-            console.log(file);
+            // console.log(file.originalname);
             ofilename = file.originalname;
             cb(null, file.originalname);
         }
@@ -128,10 +128,11 @@ app.get('/sessioncheck', function(req, res) {
 
 app.post('/fileUp', upload.array('myFile', 1), function (req, res) {
     ofilename = "https://mybucc99.s3.amazonaws.com/" + ofilename;
-    console.log(ofilename);
+    console.log(ofilename + " uploaded here");
     db.collection('myusers').update(
         {"userID" : userID_global},
-        {$set: { "URL1" : " "}});
+        {$set: { "URL1" : ofilename}}
+    );
     res.status(200).send();
 });
 
