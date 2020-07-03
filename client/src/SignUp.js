@@ -17,7 +17,7 @@ function ValidatedSignupForm() {
 						// setSubmitting(false);
 					}, 500);
 					axios
-						.post('http://localhost:9000/register', values)
+						.post('register', values)
 						.then(() => console.log('Values sent'))
 						.catch(err => {
 							console.error(err);

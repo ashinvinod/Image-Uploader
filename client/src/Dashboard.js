@@ -49,7 +49,7 @@ const Dashboard = () => {
 				}
 			}
 			axios
-			.post('http://localhost:9000/fileUp', formData, axiosConfig)
+			.post('fileUp', formData, axiosConfig)
 			.then(res => {
 				console.log('Successfully uploaded');
 				isUpdated(updated + 1);
@@ -63,7 +63,7 @@ const Dashboard = () => {
 				'UserID': a
 			};
 			axios
-				.post('http://localhost:9000/getFiles', values)
+				.post('getFiles', values)
 				.then((response) => {
 					setFileURL(response.data);
 				});

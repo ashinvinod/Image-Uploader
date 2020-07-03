@@ -35,7 +35,7 @@ function ValidatedLoginForm() {
           setSubmitting(false);
         }, 1000);
         axios
-          .post('http://localhost:9000/login', values)
+          .post('login', values)
           .then((response) => {
             console.log('Values sent ' + response.status)
             if (response.status = 200)
