@@ -12,7 +12,6 @@ const fs = require('fs');
 const BUCKET = 'mybucc99';
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-var testAPIRouter = require("./routes/testAPI.js");
 var User = require('./models/User.js')
 var app = express();
 var s3 = new AWS.S3();
@@ -41,7 +40,6 @@ app.use(session({
     resave: false,
     saveUnintialized: true
 }));
-app.use('/testAPI', testAPIRouter);
 var ofilename;
 var userID_global;
 
@@ -177,10 +175,13 @@ app.use(function(err, req, res, next) {
 //     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 //   });
 // }
-app.get('/',function(req,res){
+
+let port = process.env.PORT || 9000;
+
+app.get('/', function(req, res){
     res.set({
         'Access-control-Allow-Origin': 'http://localhost:3000'
     });
-}).listen(9000)
+}).listen(port)
 
 module.exports = app;
