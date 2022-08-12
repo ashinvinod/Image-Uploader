@@ -20,16 +20,6 @@ const Dashboard = () => {
   const [file, setFile] = useState();
   const [updated, isUpdated] = useState(0);
 
-  // const [session, ifSession] = useState(false);
-  // axios
-  // .get('http://localhost:9000/sessioncheck', {withCredentials : true})
-  // .then((response) => {
-  // 	if (response.status = 200)
-  // 	{
-  // 		ifSession(true);
-  // 	}
-  // })
-
   // An event listener function to show file info in the Form.File component
   function AddFile(event) {
     console.log(event.target.files);
@@ -44,13 +34,11 @@ const Dashboard = () => {
   }
   // Uploads the selected file to AWS S3 bucket
   function uploadFile() {
-    // console.log(file[0].name);
     let formData = new FormData();
     let formData2 = new FormData();
     formData.append("myFile", file[0]);
     formData2.append("myFile", file);
     console.log(formData);
-    // console.log(formData2);
     let axiosConfig = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -58,7 +46,7 @@ const Dashboard = () => {
     };
     axios
       .post("fileUp", formData, axiosConfig)
-      .then((res) => {
+      .then((_res) => {
         console.log("Successfully uploaded");
         isUpdated(updated + 1);
       })

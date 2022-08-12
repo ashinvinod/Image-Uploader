@@ -12,15 +12,15 @@ const fs = require("fs");
 const BUCKET = "mybucc99";
 const multer = require("multer");
 const multerS3 = require("multer-s3");
-var User = require("./models/User.js");
-var app = express();
-var s3 = new AWS.S3();
+let User = require("./models/User.js");
+let app = express();
+let s3 = new AWS.S3();
 
-var mongoose = require("mongoose");
+let mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/userData");
-var db = mongoose.connection;
+let db = mongoose.connection;
 db.on("error", console.log.bind(console, "connection error"));
-db.once("open", function (callback) {
+db.once("open", function (_callback) {
   console.log("connection succeeded");
 });
 
@@ -32,7 +32,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ credentials: true }));
 
-// app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
@@ -42,15 +41,14 @@ app.use(
     saveUnintialized: true,
   })
 );
-var ofilename;
-var userID_global;
+let ofilename;
+let userID_global;
 
-var upload = multer({
+let upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: "mybucc99",
-    key: function (req, file, cb) {
-      // console.log(file.originalname);
+    key: function (_req, file, cb) {
       ofilename = file.originalname;
       cb(null, file.originalname);
     },
@@ -59,23 +57,19 @@ var upload = multer({
 
 // Register a new user to the MongoDB database
 app.post("/register", function (req, res) {
-  var name = req.body.name;
-  var userID = req.body.userID;
-  var password = req.body.password;
   console.log(
-    "Name = " + name + " UserID = " + userID + " Password = " + password
+    "Name = " +
+      req.body.name +
+      " UserID = " +
+      req.body.userID +
+      " Password = " +
+      req.body.password
   );
-  var data = {
-    name: name,
-    userID: userID,
-    password: password,
-  };
-  var newuser = new User();
-  newuser.name = name;
-  newuser.userID = userID;
-  newuser.password = password;
-  // newuser.URL1 = "www";
-  newuser.save(function (err, savedUser) {
+  let newuser = new User();
+  newuser.name = req.body.name;
+  newuser.userID = req.body.userID;
+  newuser.password = req.body.password;
+  newuser.save(function (err, _savedUser) {
     if (err) {
       console.log(err);
       return res.status(500).send();
@@ -86,8 +80,8 @@ app.post("/register", function (req, res) {
 
 // Allow registered users to login
 app.post("/login", function (req, res) {
-  var userID = req.body.userID;
-  var password = req.body.password;
+  let userID = req.body.userID;
+  let password = req.body.password;
   userID_global = userID;
   User.findOne({ userID: userID, password: password }, function (err, user) {
     if (err) {
@@ -101,7 +95,6 @@ app.post("/login", function (req, res) {
       req.session.user = user;
       console.log("WELCOME TO IMAGEUPLOAD!!");
       return res.send(user);
-      // res.render('fileUpload.html',{awsurl: req.session.user.URL1});
     }
   });
 });
@@ -121,9 +114,8 @@ app.get("/sessioncheck", function (req, res) {
 });
 
 // Uploads the picture to the AWS bucket and updates the MongoDB database
-// app.post('/fileUp', upload.array('photo',1), function (req, res) {
 
-app.post("/fileUp", upload.array("myFile", 1), function (req, res) {
+app.post("/fileUp", upload.array("myFile", 1), function (_req, res) {
   ofilename = "https://mybucc99.s3.amazonaws.com/" + ofilename;
   console.log(ofilename + " uploaded here");
   db.collection("myusers").update(
@@ -134,7 +126,7 @@ app.post("/fileUp", upload.array("myFile", 1), function (req, res) {
 });
 
 app.post("/getFiles", function (req, res) {
-  var userID = req.body.UserID;
+  let userID = req.body.UserID;
   User.findOne({ userID: userID }, function (err, user) {
     if (err) {
       console.log(err);
@@ -143,17 +135,16 @@ app.post("/getFiles", function (req, res) {
       console.log("USER NOT FOUND!!!");
       return res.status(404).send();
     } else {
-      // console.log(user.URL1);
       return res.send(user.URL1);
     }
   });
 });
 
-app.use(function (req, res, next) {
+app.use(function (_req, _res, next) {
   // catch 404 and forward to error handler
   next(createError(404));
 });
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res, _next) {
   // error handler
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -162,6 +153,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
 // if (process.env.NODE_ENV === 'production') {
 //   // Serve any static files
 //   // app.use(express.static(path.join(__dirname, 'client/build')));
@@ -174,7 +166,7 @@ app.use(function (err, req, res, next) {
 let port = process.env.PORT || 9000;
 
 app
-  .get("/", function (req, res) {
+  .get("/", function (_req, res) {
     res.set({
       "Access-control-Allow-Origin": "http://localhost:3000",
     });
