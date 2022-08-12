@@ -37,7 +37,7 @@ function ValidatedLoginForm() {
             .post("login", values)
             .then((response) => {
               console.log("Values sent " + response.status);
-              if ((response.status = 200)) {
+              if (response.status === 200) {
                 console.log("LOGGED IN");
                 userProfile.setName(response.data.name);
                 userProfile.setUserID(response.data.userID);
@@ -46,7 +46,7 @@ function ValidatedLoginForm() {
               history.push("/dashboard");
             })
             .catch((err) => {
-              if ((err.status = 404)) {
+              if (err.status === 404) {
                 setIfPresent(false);
                 setShow(true);
               }
@@ -62,7 +62,6 @@ function ValidatedLoginForm() {
           values,
           touched,
           errors,
-          isSubmitting,
           handleChange,
           handleBlur,
           handleSubmit,

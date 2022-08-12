@@ -5,16 +5,14 @@ import { Form, Button, Col, InputGroup } from "react-bootstrap";
 import axios from "axios";
 import history from "./history";
 
-// const ValidatedSignuptooForm = () => {
 function ValidatedSignupForm() {
   return (
     <div>
       <Formik
         initialValues={{ name: "", userID: "", password: "" }}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { _setSubmitting }) => {
           setTimeout(() => {
             console.log("Submitted these - ", values);
-            // setSubmitting(false);
           }, 500);
           axios
             .post("register", values)
@@ -37,11 +35,9 @@ function ValidatedSignupForm() {
           values,
           touched,
           errors,
-          isSubmitting,
           handleChange,
           handleBlur,
           handleSubmit,
-          isValid,
         }) => (
           <div>
             <br />
@@ -179,5 +175,4 @@ function ValidatedSignupForm() {
     </div>
   );
 }
-//<Button type="submit" disabled={!(props.isValid && props.dirty)} onClick={() => history.push('/login')}>Sign Up</Button>
 export default ValidatedSignupForm;
