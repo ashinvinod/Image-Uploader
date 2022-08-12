@@ -1,9 +1,9 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import ValidatedSignupForm from './SignUp';
-import ValidatedLoginForm from './LogIn';
-import Dashboard from './Dashboard';
-import history from './history';
+import React from "react";
+import { Router, Route, Switch } from "react-router-dom";
+import ValidatedSignupForm from "./SignUp";
+import ValidatedLoginForm from "./LogIn";
+import Dashboard from "./Dashboard";
+import history from "./history";
 
 function App() {
   return (
